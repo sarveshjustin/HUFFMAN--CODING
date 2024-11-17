@@ -80,6 +80,7 @@ while len(nodes) > 1:
 #### Print the characters and its huffmancode
 ``` Python
 huffmanCode = huffman_code_tree (nodes[0][0])
+
 print('Char | Huffman code ')
 print('---------------------')
 
@@ -90,7 +91,7 @@ for (char, frequency) in freq:
 ## Output:
 
 ### Print the characters and its huffmancode
-![image](https://github.com/user-attachments/assets/0f5e1869-235d-4bd5-a48d-bb0a4f192c83)
+![Screenshot 2024-11-17 163550](https://github.com/user-attachments/assets/9a909c79-61c6-4ca8-bb6c-dbdabb2693ca)
 
 
 ## Result
