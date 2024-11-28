@@ -1,98 +1,31 @@
-# EXP 11 Huffman-Coding
-## Aim
-To implement Huffman coding to compress the data using Python.
-
-## Software Required
-1. Anaconda - Python 3.7
-
-## Algorithm:
-### Step1:
-Initialize the string.
-
-
-### Step2:
-Create the tree nodes.
-
-### Step3:
-Implement the Huffman Code.
-
-### Step4:
-Calculate the Frequency.
-
-### Step5:
-Print the Huffman code for the string.
-
- 
-## Program:
 ```
-Name:sarvesh s
-Reg No:212222230135
-```
-#### Get the input String
-``` py
-string = 'sarvesh'
-```
-#### Create tree nodes
-``` Python
-class NodeTree(object):
-    
-    def __init__(self, left=None, right=None):
-        self.left = left 
-        self.right  = right
-
-    def children(self):
-        return (self.left,self.right)
-```
-#### Main function to implement huffman coding
-``` Python
-def huffman_code_tree(node, left=True, binString=''): 
-    if type(node) is str:
-        return {node: binString}
-    (l, r) = node.children()
-    D= dict()
-    D.update(huffman_code_tree(l, True, binString + '0'))
-    D.update(huffman_code_tree(r, False, binString + '1'))
-    return D
-```
-#### Calculate frequency of occurrence
-``` Python
-freq = {}
-
-for c in string:
-    if c in freq:
-        freq[c] += 1
+input_string = "huffman coding"
+frequency = {}
+for char in input_string:
+    if char in frequency:
+        frequency[char] += 1
     else:
-        freq[c] = 1
-
-freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
-nodes = freq
-
+        frequency[char] = 1
+nodes = [[char, freq] for char, freq in frequency.items()]
 while len(nodes) > 1:
-    (key1, c1) = nodes[-1]
-    (key2, c2) = nodes[-2]
-    nodes = nodes[:-2]
-    node = NodeTree(key1, key2)
-    nodes.append((node, c1 + c2))
-    
-    nodes = sorted(nodes, key=lambda x: x[1],reverse=True)
+    nodes = sorted(nodes, key=lambda x: x[1])
+    left = nodes.pop(0)
+    right = nodes.pop(0)
+    new_node = [[left, right], left[1] + right[1]]
+    nodes.append(new_node)
+huffman_tree = nodes[0]
+huffman_codes = {}
 
+def generate_codes(tree, code=""):
+    if isinstance(tree[0], str): 
+        huffman_codes[tree[0]] = code
+    else:  
+        generate_codes(tree[0][0], code + "0")
+        generate_codes(tree[0][1], code + "1")
+
+generate_codes(huffman_tree)
+print("Character | Huffman Code")
+print("-------------------------")
+for char, code in huffman_codes.items():
+    print(f"    {char}    |    {code}")
 ```
-#### Print the characters and its huffmancode
-``` Python
-huffmanCode = huffman_code_tree (nodes[0][0])
-
-print('Char | Huffman code ')
-print('---------------------')
-
-for (char, frequency) in freq:
-    print('%-4r %12s' % (char, huffmanCode[char]))
-
-```
-## Output:
-
-### Print the characters and its huffmancode
-![Screenshot 2024-11-17 163550](https://github.com/user-attachments/assets/9a909c79-61c6-4ca8-bb6c-dbdabb2693ca)
-
-
-## Result
-Thus the huffman coding was implemented to compress the data using python programming.
